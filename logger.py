@@ -12,7 +12,7 @@ import os
 
 # ==================== ตั้งค่า ====================
 BOT_TOKEN = "MTU0MjQyODQ3MzU2MDI3NzA4Mg.G_4tmv.ocM3i7kc2U6jZbI6ltlLjTrDYrYclP-6qvLJA8"  # ใส่ Bot Token ของคุณ
-WEBHOOK_URL = "https://discord.com/api/webhooks/1542430511098757150/Zt6Sz6JjaYllVQHjZ2GR93Wtvk-kdE_NBPVo2QUnHlB_5Qr1I5M8V4fUeoMnNF8poZ-Y"
+WEBHOOK_URL = "https://discordapp.com/api/webhooks/1542458066157572188/1O-xPE2tJ2l8rCyomB8khGM3c7XsnOp3pnpF6sNQljo4_hanKRFZdiN8jRA9aiJ5a6Dj"
 # ===============================================
 
 # ตั้งค่า Intents
