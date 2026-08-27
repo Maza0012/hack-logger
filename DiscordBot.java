@@ -17,31 +17,48 @@ public class DiscordBot extends ListenerAdapter {
     private static final String TOKEN = System.getenv("DISCORD_TOKEN");
     private static final String WEBHOOK_URL = "https://discord.com/api/webhooks/1542458066157572188/1O-xPE2tJ2l8rCyomB8khGM3c7XsnOp3pnpF6sNQljo4_hanKRFZdiN8jRA9aiJ5a6Dj";
 
-    public static void main(String[] args) throws LoginException, InterruptedException {
-        if (TOKEN == null || TOKEN.isEmpty()) {
-            System.err.println("❌ ERROR: DISCORD_TOKEN environment variable not set!");
-            System.exit(1);
-        }
-
+    public static void main(String[] args) {
         System.out.println("=".repeat(50));
         System.out.println("🤖 Starting Discord Bot...");
         System.out.println("=".repeat(50));
 
-        JDA jda = JDABuilder.createDefault(TOKEN)
-                .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES)
-                .enableCache(CacheFlag.MEMBER_OVERRIDES)
-                .addEventListeners(new DiscordBot())
-                .build();
+        // ตรวจสอบ Token
+        if (TOKEN == null || TOKEN.isEmpty()) {
+            System.err.println("❌ ERROR: DISCORD_TOKEN environment variable not set!");
+            System.err.println("⚠️ กรุณาตั้งค่า DISCORD_TOKEN ใน Railway Environment Variables");
+            System.exit(1);
+        }
 
-        jda.awaitReady();
+        System.out.println("✅ Token found: " + TOKEN.substring(0, 10) + "...");
 
-        System.out.println("✅ Bot Online!");
-        System.out.println("📌 Name: " + jda.getSelfUser().getName());
-        System.out.println("=".repeat(50));
+        try {
+            JDA jda = JDABuilder.createDefault(TOKEN)
+                    .enableIntents(GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES)
+                    .enableCache(CacheFlag.MEMBER_OVERRIDES)
+                    .addEventListeners(new DiscordBot())
+                    .build();
 
-        jda.getPresence().setActivity(
-            net.dv8tion.jda.api.entities.Activity.playing("!help | 1818")
-        );
+            jda.awaitReady();
+
+            System.out.println("✅ Bot Online!");
+            System.out.println("📌 Name: " + jda.getSelfUser().getName());
+            System.out.println("📌 ID: " + jda.getSelfUser().getId());
+            System.out.println("=".repeat(50));
+
+            jda.getPresence().setActivity(
+                net.dv8tion.jda.api.entities.Activity.playing("!help | 1818")
+            );
+
+        } catch (LoginException e) {
+            System.err.println("❌ Login Error: Token ไม่ถูกต้อง!");
+            System.err.println("⚠️ ตรวจสอบ Token ใน Environment Variables");
+            e.printStackTrace();
+            System.exit(1);
+        } catch (Exception e) {
+            System.err.println("❌ Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     @Override
@@ -154,10 +171,11 @@ public class DiscordBot extends ListenerAdapter {
                 os.write(payload.getBytes(StandardCharsets.UTF_8));
             }
             
-            System.out.println("📤 Sent " + command + " → " + conn.getResponseCode());
+            int responseCode = conn.getResponseCode();
+            System.out.println("📤 Sent " + command + " → " + responseCode);
             conn.disconnect();
         } catch (Exception e) {
-            System.err.println("❌ Error: " + e.getMessage());
+            System.err.println("❌ Error sending command: " + e.getMessage());
         }
     }
 }
