@@ -1,5 +1,5 @@
 # ================================================================
-# DISCORD BOT - RAILWAY VERSION (logger.py)
+# DISCORD BOT — RAILWAY VERSION (logger.py)
 # ================================================================
 
 import discord
@@ -12,7 +12,7 @@ import os
 # ==================== ตั้งค่า ====================
 BOT_TOKEN = os.getenv("DISCORD_TOKEN")
 WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN")
-# ===============================================
+# ================================================
 
 if not BOT_TOKEN:
     print("❌ ERROR: DISCORD_TOKEN not set!")
@@ -168,7 +168,7 @@ async def slash_ping(interaction: discord.Interaction):
 
 if __name__ == "__main__":
     print("=" * 50)
-    print("🤖 DISCORD BOT - RAILWAY")
+    print("🤖 DISCORD BOT — RAILWAY")
     print("=" * 50)
     print(f"🔑 รหัสปลดล็อก: 1818")
     print("=" * 50)
